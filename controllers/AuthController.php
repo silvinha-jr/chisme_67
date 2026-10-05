@@ -30,9 +30,10 @@ class AuthController {
 
             $usuario = Usuario::obtenerPorEmail($email);
 
-            if ($usuario && password_verify($contrasena, $usuario['contrasena'])) {
+            if ($usuario && password_verify($contrasena, $usuario['contrasena'])) {              
                 $_SESSION['usuario_id'] = $usuario['id_usuario'];
                 $_SESSION['usuario_nombre'] = $usuario['nombre_completo'];
+                $_SESSION['usuario_email'] = $usuario['email']; 
             }
             header('Location: index.php');
             exit();

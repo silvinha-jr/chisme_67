@@ -3,17 +3,60 @@ session_start();
 require_once 'controllers/AuthController.php';
 require_once 'controllers/PublicacionController.php';
 
-$action = $_GET['action'] ?? '';
+$action = $_GET['action'] ?? 'inicio';
 
-if ($action === 'register') {
-    AuthController::registrar();
-} elseif ($action === 'login') {
-    AuthController::login();
-} elseif ($action === 'logout') {
-    AuthController::logout();
-} elseif ($action === 'crear_publicacion') {
-    PublicacionController::crear();
-} else {
-    require_once 'views/home.php';
+switch ($action) {
+    case 'register':
+        AuthController::registrar();
+        break;
+
+    case 'login':
+        AuthController::login();
+        break;
+
+    case 'logout':
+        AuthController::logout();
+        break;
+
+    case 'crear_publicacion':
+        PublicacionController::crear();
+        break;
+
+    case 'sobre_nosotros':
+        require_once 'views/sobre_nosotros.php';
+        break;
+
+    case 'perfil':
+        require_once 'views/perfil.php';
+        break;
+
+    case 'configuracion':
+        require_once 'views/configuracion.php';
+        break;
+
+    case 'notificaciones':
+        require_once 'views/notificaciones.php';
+        break;
+
+    case 'inicio':
+    default:
+        require_once 'views/home.php';
+        break;
+
+case 'guardar_configuracion':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['apodo']) && !empty($_POST['apodo'])) {
+                $_SESSION['usuario_apodo'] = trim($_POST['apodo']);
+            }
+            if (isset($_POST['avatar'])) {
+                $_SESSION['usuario_avatar'] = $_POST['avatar'];
+            }
+            if (isset($_POST['tema'])) {
+                $_SESSION['usuario_tema'] = $_POST['tema'];
+            }
+            header('Location: index.php?action=perfil');
+            exit;
+        }
+        break;
 }
 ?>
