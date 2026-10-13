@@ -16,6 +16,7 @@ class AuthController {
                 if ($idUsuario) {
                     $_SESSION['usuario_id'] = $idUsuario;
                     $_SESSION['usuario_nombre'] = $nombre;
+                    $_SESSION['usuario_email'] = $email;
                 }
             }
             header('Location: index.php');
@@ -30,10 +31,15 @@ class AuthController {
 
             $usuario = Usuario::obtenerPorEmail($email);
 
-            if ($usuario && password_verify($contrasena, $usuario['contrasena'])) {              
+            if ($usuario && password_verify($contrasena, $usuario['contrasena'])) {
                 $_SESSION['usuario_id'] = $usuario['id_usuario'];
                 $_SESSION['usuario_nombre'] = $usuario['nombre_completo'];
-                $_SESSION['usuario_email'] = $usuario['email']; 
+                $_SESSION['usuario_email'] = $usuario['email'];
+
+                if (!empty($usuario['apodo'])) {
+                    $_SESSION['usuario_apodo'] = $usuario['apodo'];
+                }
+                $_SESSION['usuario_tema'] = $usuario['tema'] ?? 'claro';
             }
             header('Location: index.php');
             exit();

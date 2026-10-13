@@ -2,6 +2,7 @@
 session_start();
 require_once 'controllers/AuthController.php';
 require_once 'controllers/PublicacionController.php';
+require_once 'controllers/ReaccionController.php';
 
 $action = $_GET['action'] ?? 'inicio';
 
@@ -20,6 +21,14 @@ switch ($action) {
 
     case 'crear_publicacion':
         PublicacionController::crear();
+        break;
+
+    case 'reaccionar':
+        ReaccionController::reaccionar();
+        break;
+
+    case 'prueba_reacciones': // Página temporal para probar el back end. Borrar antes de entregar.
+        require_once 'views/prueba_reacciones.php';
         break;
 
     case 'sobre_nosotros':
@@ -54,6 +63,11 @@ case 'guardar_configuracion':
             if (isset($_POST['tema'])) {
                 $_SESSION['usuario_tema'] = $_POST['tema'];
             }
+                Usuario::actualizarPerfil(
+                $_SESSION['usuario_id'] ?? 0,
+                $_SESSION['usuario_apodo'] ?? null,
+                $_SESSION['usuario_tema'] ?? 'claro'
+            );
             header('Location: index.php?action=perfil');
             exit;
         }

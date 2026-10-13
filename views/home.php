@@ -115,10 +115,7 @@ $esOscuro = (isset($_SESSION['usuario_tema']) && $_SESSION['usuario_tema'] === '
  <?php if (!empty($publicaciones)): ?>
   <?php foreach ($publicaciones as $pub): ?>
    <?php 
-     $autor = $pub['nombre_completo'];
-     if (isset($_SESSION['usuario_id']) && $pub['id_usuario'] == $_SESSION['usuario_id'] && !empty($_SESSION['usuario_apodo'])) {
-         $autor = $_SESSION['usuario_apodo'];
-     }
+      $autor = !empty($pub['apodo']) ? $pub['apodo'] : $pub['nombre_completo'];
    ?>
    <div class="post-card">
     <strong><?php echo htmlspecialchars($autor); ?>:</strong>

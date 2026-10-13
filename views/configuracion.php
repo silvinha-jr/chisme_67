@@ -24,7 +24,11 @@ $esOscuro = (isset($_SESSION['usuario_tema']) && $_SESSION['usuario_tema'] === '
     }
 
     .navbar {
-        background-color: #000000 !important;
+        background-color: #121212 !important;
+    }
+
+    .nav-buttons .btn-nav {
+        color: #bb86fc !important;
     }
 
     .post-card, .login-card {
